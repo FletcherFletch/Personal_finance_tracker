@@ -1,0 +1,12 @@
+Here im going to make the users  and the profile the user will be connected to include objects in the model,
+such as types of purchases, a way to store purchases, 
+
+app will require a 1 time payment of 0 dollars and later a 2 month subscription 
+
+First create User and User Profiles
+
+Second Setup Login, Register, and Homepage
+
+    How will webapp operate and look 
+
+    Ex. Register -> login -> homepage shows users and other things -> users financial data page
