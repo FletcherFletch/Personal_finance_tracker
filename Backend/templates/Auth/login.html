@@ -1,16 +1,106 @@
-{% extends "base.html" %}
+{% extends "account/base.html" %}
 
 
 
 {% block content %}
 
-<form method="POST" action="/login/">
-    {% csrf_token %}
-    <input type="text" name="username" placeholder="Username" />
-    <input type="password" name="password" placeholder="Your Password" />
+<style>
+
+    .login-form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /*height: 80vh;*/
+        /*margin-bottom: 40px;*/
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 30px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        width: 300px;
+    }
+
+    .login-form input,
+    .login-form button {
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    .login-form button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .login-form button:hover {
+        background-color: #45a049;
+    }
+
+    .banner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px 30px;
+        margin: 60px auto 20px auto;
+        margin-top: 10px;
+        width: fit-content;
+        max-width: 90%;
+    }
+
+    .banner p {
+        margin: 0;
+        font-size: 1.2rem;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* vertical */
+    align-items: center;     /* horizontal */
+    min-height: 80vh;       /* full screen height */
+    gap: 30px;               /* space between banner and form */
+    }
+
+</style>
+
+<div class="return">   
+    <form method="POST" action="{% url 'register-view' %}" class="return-form">
+        {% csrf_token %}
+        <button type="submit">Register</button>
+    </form>
     
-    <button type="submit">Login</button>
-</form>
+</div>
+
+<div class="login-container">
+
+    <div class="banner">
+        <p>Please Login In Here !</p>
+    </div>
+
+    <div class="login-form-container">
+        <form method="POST" class="login-form" action="{% url 'login' %}">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" />
+            <input type="password" name="password" placeholder="Your Password" />    
+            <button type="submit">Login</button>
+        </form>
+    </div>
+  
+</div>
+
 
 
 
