@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, authenticate, login
+import json
 
 
 User = get_user_model()
@@ -48,4 +49,15 @@ def home_view(request):
 
 
     return render(request, "Home/home.html", {})
+
+def dashboard_view(request):
+    labels = ['rent', 'Food', 'Transport', 'Entertainment', 'Savings']
+    data = [1200, 500, 150, 200, 300]
+
+    context = {
+        'labels': json.dumps(labels),
+        'data': json.dumps(data), 
+    }
+        
+    return render(request, "Home/dashboard.html", context)
     

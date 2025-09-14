@@ -10,3 +10,12 @@ Second Setup Login, Register, and Homepage
     How will webapp operate and look 
 
     Ex. Register -> login -> homepage shows users and other things -> users financial data page
+
+
+Template Order
+
+Base is the base template for all of the pages
+
+Home is where the welcome message and maybe login and sign up buttons are
+
+Dashboard is private and is displayed after signup 
