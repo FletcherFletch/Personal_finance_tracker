@@ -7,9 +7,58 @@
 
 {% block content %}
     <div style="background-color: black; min-height: 100vh; padding: 2rem; color: white;">
-        <h2 style="color: white;">Your Financial Dashboard</h2>
+        <h2 style="color: white;">Your Financial Dashboard For This Month</h2>
+        <div>
+            <form method="POST" class="category_name">
+                {% csrf_token %}
+                <input type="text" name="category" placeholder="Add your spending category here" />
+                <input type="hidden" name="form_name" value="category1" />
+                
+                <buttom type="submit" hidden>Submit</buttom>
+            </form>
+        </div>
+
         <div style="max-width: 400px; margin: 2rem auto;">
             <canvas id="expenseChart"></canvas>
+
+            <form method="POST" class="finance_input">
+                {% csrf_token %}
+                <input type="hidden" name="form_name" value="amount_spent" />
+                <!-- <input type="number" name="rent" id="rent"  placeholder="How much is your rent" />
+                <input type="number" name="food" id="food"  placeholder="How much is your Food" />
+                <input type="number" name="transport" id="transport" placeholder="How much is your Transport" />
+                <input type="number" name="savings" id="savings" placeholder="How much is your Savings" />
+                <input type="number" name="entertainment" id="entertainment" placeholder="How much is your Entertainment" /> -->
+                {% for category in categories %}
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; margin-top: 2rem;">
+                    <input
+                        type="number"
+                        name="{{category.label}}"
+                        id="{{ category.label|lower }}"
+                        placeholder="How much have you spent on {{category.label}}"
+                        style="flex: 1;"
+                        />
+                    <form method="POST" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_name" value="delete_category" />
+                        <input type="hidden" name="delete_label" value="{{ category.label }}" />
+                        <button type="submit" style="background-color: red; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer;">✕</button>
+                    </form>
+                </div>
+
+                {% endfor %}
+                <button type="submit">Update Your Data Chart</button>
+              
+            </form>
+        
+        </div>
+
+        <div>
+            <form method="POST" class="return_home" action="{% url 'home' %}">
+                {% csrf_token %}
+                <button type="submit">Return to the Homepage </button>
+            </form>
+
         </div>
     </div>
 {% endblock %}

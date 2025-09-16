@@ -19,3 +19,10 @@ Base is the base template for all of the pages
 Home is where the welcome message and maybe login and sign up buttons are
 
 Dashboard is private and is displayed after signup 
+
+change the pie chart inputs from as is to a model and update view 
+
+when they register, they need to answer questions on a new page like what is the monthly income, desired spending
+then they get taken to homepage 
+homepage allows user to change settings
+delete catetgories 

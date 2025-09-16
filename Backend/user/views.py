@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, authenticate, login
+from .models import PieChart
 import json
 
 
@@ -51,12 +52,66 @@ def home_view(request):
     return render(request, "Home/home.html", {})
 
 def dashboard_view(request):
-    labels = ['rent', 'Food', 'Transport', 'Entertainment', 'Savings']
-    data = [1200, 500, 150, 200, 300]
+
+    #global labels_list, data_list  
+
+   
+    
+    if request.method == "POST":
+        form_name = request.POST.get("form_name")
+        # value = request.POST.get("value")
+        # rent = request.POST.get("rent")
+        # transport = request.POST.get("transport")
+        # food = request.POST.get("food")
+        # entertainment = request.POST.get("entertainment")
+
+        #labels = request.POST.get("label")
+
+            #when forms are submitted, django sees
+            #request.POST = { 'csrfmiddlewaretoken':'csrfcode', 'rent': '1200',}
+            #django takes the form as a dictionary with a key and a value 
+            #value always prints a string, even numbers it comes out as "1200" need float(value) to get 1200
+        if form_name == "category1":
+            #for key, value in request.POST.items():
+            label = request.POST.get("category")
+                #if key == 'csrfmiddlewaretoken':
+                    #continue
+            if label:
+                try:
+                    PieChart.objects.update_or_create(
+                        label= label.capitalize(),
+                        #default={'amount': 0}
+                        amount = 0
+                    )
+                except ValueError:
+                    pass
+        if form_name == "delete_category":
+            name = request.POST.get("")
+            
+        if form_name == "amount_spent":
+            for key, value in request.POST.items():
+                #^ this loops through that dictionary 
+                #.items() dictionary method to get (key,value) pairs 
+                if key == 'csrfmiddlewaretoken':
+                    continue
+                #checkst hat csrf token is there and skips it 
+                try:
+                    amount = float(value)
+                    PieChart.objects.update_or_create(
+                        label = key.capitalize(), 
+                        defaults={'amount': amount}
+                    )
+                except ValueError:
+                    continue
+            #This grabs data to render chart 
+    piechart = PieChart.objects.all()
+    labels = [entry.label for entry in piechart]
+    data = [float(entry.amount) for entry in piechart]
 
     context = {
         'labels': json.dumps(labels),
         'data': json.dumps(data), 
+        'categories': piechart
     }
         
     return render(request, "Home/dashboard.html", context)
