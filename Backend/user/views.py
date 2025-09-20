@@ -85,9 +85,30 @@ def dashboard_view(request):
                     )
                 except ValueError:
                     pass
+        if form_name == "mincome":
+            income = request.POST.get("income_value")
+
+            if income:
+                try:
+                    amount = float(income)
+                    PieChart.objects.update_or_create(
+                        label="Income",
+                        defaults={'amount': amount}
+                    )
+                except ValueError:
+                    pass
+
+
         if form_name == "delete_category":
-            name = request.POST.get("")
+            label_to_delete = request.POST.get("delete_label")
             
+            if label_to_delete:
+                try:
+                    entry = PieChart.objects.get(label=label_to_delete)
+                    entry.delete()
+                except PieChart.DoesNotExist:
+                    pass
+
         if form_name == "amount_spent":
             for key, value in request.POST.items():
                 #^ this loops through that dictionary 
@@ -103,14 +124,22 @@ def dashboard_view(request):
                     )
                 except ValueError:
                     continue
+    try:
+         income_entry = PieChart.objects.get(label="Income")
+         income = float(income_entry.amount)
+    except PieChart.DoesNotExist:
+         income = 0
+
             #This grabs data to render chart 
     piechart = PieChart.objects.all()
     labels = [entry.label for entry in piechart]
     data = [float(entry.amount) for entry in piechart]
+    
 
     context = {
         'labels': json.dumps(labels),
         'data': json.dumps(data), 
+        'income': income,
         'categories': piechart
     }
         

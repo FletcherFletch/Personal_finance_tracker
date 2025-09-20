@@ -3,18 +3,38 @@
 {% block head_title %}Home{% endblock %}
 
 {% block content %}
+    <div style="background-color: black; color: white; min-height: 100vh; padding: 2rem;">
+        <header>
+            <h1 style="color: white;">Welcome to Your Finance Tracker Homepage</h1>
+            <nav>
+                <ul style="list-style: none; padding: 0;">
+                    <li><a href="{% url 'login' %}" style="color: white; text-decoration: underline;">Back To Login</a></li>
+                </ul>
+            </nav>
+        </header>
 
-    <header>
-        <h1>Welcome to Your Finance Tracker Homepage</h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'login' %}">Back To Login</a></li>
-                <li><a href="{% url 'dashboard' %}"> Tracker</a> </li>
-            </ul>
-        </nav>
-    </header>
-    <div class="container mx-auto p-8">
-        
-        <p>Some content here.</p>
+        <div class="container mx-auto p-8">
+            <p>Firstly How Much total income do you recieve monthly</p>
+            <form class="monthly" method="POST" action="{% url 'home' %}">
+                {% csrf_token %}
+                <input type="hidden" name="form_name" value="mincome" />
+                <input 
+                    type="number" 
+                    name="income_value" 
+                    placeholder="How much do you take in monthly..." 
+                    style="width: 100%; background-color: #4B5563; color: white; padding: 0.75rem; border: none; border-radius: 4px;"
+                />
+                <button type="submit">Save</button>
+            </form>
+        </div>
+
+        <div>
+              <nav>
+                <ul style="list-style: none; padding: 0;">
+                    <li><a href="{% url 'dashboard' %}" style="color: white; text-decoration: underline;">Go to tracker</a></li>
+                </ul>
+            </nav>
+        </div>
+
     </div>
 {% endblock %}

@@ -7,8 +7,10 @@
 
 {% block content %}
     <div style="background-color: black; min-height: 100vh; padding: 2rem; color: white;">
-        <h2 style="color: white;">Your Financial Dashboard For This Month</h2>
+        <h2 style="color: white;">Your Financial Dashboard For This Month: ${{ income }}</h2>
+          
         <div>
+    
             <form method="POST" class="category_name">
                 {% csrf_token %}
                 <input type="text" name="category" placeholder="Add your spending category here" />
@@ -16,7 +18,9 @@
                 
                 <buttom type="submit" hidden>Submit</buttom>
             </form>
+            ${{ income }}
         </div>
+      
 
         <div style="max-width: 400px; margin: 2rem auto;">
             <canvas id="expenseChart"></canvas>
@@ -38,18 +42,23 @@
                         placeholder="How much have you spent on {{category.label}}"
                         style="flex: 1;"
                         />
-                    <form method="POST" style="display: inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="form_name" value="delete_category" />
-                        <input type="hidden" name="delete_label" value="{{ category.label }}" />
-                        <button type="submit" style="background-color: red; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer;">✕</button>
-                    </form>
+                    <button type="submit">Update Chart</button>
+                  
                 </div>
 
                 {% endfor %}
-                <button type="submit">Update Your Data Chart</button>
+
               
             </form>
+
+            {% for category in categories %}
+                <form method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_name" value="delete_category" />
+                    <input type="hidden" name="delete_label" value="{{ category.label }}" />
+                    <button type="submit" style="background-color: red; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; cursor: pointer;">✕</button>
+                </form>
+            {% endfor %}
         
         </div>
 
@@ -61,6 +70,9 @@
 
         </div>
     </div>
+  
+
+   
 {% endblock %}
 
 {% block inline_js %}

@@ -31,6 +31,7 @@ class UserProfile(models.Model):
 class PieChart(models.Model):
     label = models.CharField(max_length=100, unique=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    #monthly_income = models.DecimalField(max_digits=10, decimal_places=9, default=0)
 
     def __str__(self):
         return f"{self.label}, {self.amount}"
